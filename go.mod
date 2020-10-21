@@ -14,9 +14,10 @@ require (
 	github.com/mattn/go-sqlite3 v1.14.4 // indirect
 	github.com/valyala/fasttemplate v1.2.1 // indirect
 	golang.org/x/crypto v0.0.0-20201016220609-9e8e0b390897 // indirect
-	golang.org/x/net v0.0.0-20201020065357-d65d470038a5 // indirect
-	golang.org/x/sys v0.0.0-20201018230417-eeed37f84f13 // indirect
+	golang.org/x/net v0.0.0-20201021035429-f5854403a974 // indirect
+	golang.org/x/sys v0.0.0-20201020230747-6e5568b54d1a // indirect
 	gopkg.in/urfave/cli.v1 v1.20.0 // indirect
-	gorm.io/driver/sqlite v1.1.3 // indirect
-	gorm.io/gorm v1.20.4 // indirect
+	gorm.io/driver/postgres v1.0.4
+	gorm.io/driver/sqlite v1.1.3
+	gorm.io/gorm v1.20.4
 )

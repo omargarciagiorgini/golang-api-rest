@@ -7,7 +7,7 @@ import (
 )
 
 //authentication olahjdoah*/
-func authentication(username, password string, c echo.Context) (bool, error) {
+func Authentication(username, password string, c echo.Context) (bool, error) {
 	//check against DB
 	fmt.Println(username)
 	if password == "pass" {
