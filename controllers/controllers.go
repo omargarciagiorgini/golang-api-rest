@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"encoding/json"
-	"fmt"
 	"go-rest/db"
 	"go-rest/models"
 	"net/http"
@@ -11,9 +10,14 @@ import (
 )
 
 //stgsgrgr
-func GetProds(c echo.Context) error {
-	catName := c.QueryParam("name")
-	return c.String(http.StatusOK, fmt.Sprintf("el nombre del gato es : %s", catName))
+func GetAll(c echo.Context) error {
+	pgconn, err := db.Conn()
+	if err != nil {
+		return err
+	}
+	prod := models.Product{}
+	pgconn.Find(&prod)
+	return c.JSON(http.StatusOK, prod)
 }
 
 //InsertProd get json data from body and save it to DB
@@ -28,6 +32,27 @@ func InsertProd(c echo.Context) error {
 	return c.String(http.StatusOK, "all went fine")
 }
 
-func Hello(c echo.Context) error {
-	return c.String(http.StatusOK, "hola mundo !!!")
+//fafaf fas
+func GetProdById(c echo.Context) error {
+	pgconn, err := db.Conn()
+	if err != nil {
+		return err
+	}
+	prod := models.Product{}
+	id := c.Param("id")
+	pgconn.Find(&prod, id)
+	return c.JSON(http.StatusOK, prod)
+}
+
+//opjpohoh
+func UpdateProd(c echo.Context) error {
+	pgconn, err := db.Conn()
+	prod := models.Product{}
+	if err != nil {
+		return err
+	}
+	err = json.NewDecoder(c.Request().Body).Decode(&prod)
+	pgconn.Save(&prod)
+
+	return c.JSON(http.StatusOK, prod)
 }
