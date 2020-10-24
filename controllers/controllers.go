@@ -5,6 +5,7 @@ import (
 	"go-rest/db"
 	"go-rest/models"
 	"net/http"
+	"strings"
 
 	"github.com/labstack/echo/v4"
 )
@@ -21,15 +22,17 @@ func GetAll(c echo.Context) error {
 }
 
 //InsertProd get json data from body and save it to DB
-func InsertProd(c echo.Context) error {
-	prod := models.Product{}
-	err := json.NewDecoder(c.Request().Body).Decode(&prod)
-	if err != nil {
-		return err
-	}
+func InsertProd(c echo.Context) (err error) {
 	pgconn, err := db.Conn()
+	prod := new(models.Product)
+	if err = c.Bind(prod); err != nil {
+		return
+	}
+	if err = c.Validate(prod); err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, strings.ToLower(err.Error()))
+	}
 	pgconn.Create(&prod)
-	return c.String(http.StatusOK, "all went fine")
+	return c.JSON(http.StatusOK, prod)
 }
 
 //fafaf fas
@@ -52,6 +55,9 @@ func UpdateProd(c echo.Context) error {
 		return err
 	}
 	err = json.NewDecoder(c.Request().Body).Decode(&prod)
+	if err != nil {
+		return err
+	}
 	pgconn.Save(&prod)
 
 	return c.JSON(http.StatusOK, prod)
